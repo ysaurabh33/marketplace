@@ -41,7 +41,7 @@ class FileUpload extends Controller
             $this->amazon_feed($request->file, $date, $id->id);
             $marketplace = new AmazonMWS();
         } else if($request->marketplace == 2) {
-            $marketplace = new Walmart();
+            //$marketplace = new Walmart();
             $this->walmart_feed($request->file, $date, $id->id);
         } else {
             session()->flash('error', 'Invalid Data!');
@@ -151,7 +151,7 @@ class FileUpload extends Controller
         $count = 0;
         $file = Files::find($id);        
         $fileTxt = '';
-        
+           
         $data = [];
         foreach($worksheets as $sheet)
         {
