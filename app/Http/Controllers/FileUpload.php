@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use PhpOffice\PhpSpreadsheet\IOFactory;
-use PhpOffice\PhpSpreadsheet\Reader\IReadFilter;
 use App\Models\Files;
 use App\Library\AmazonMWS;
+use App\Library\AmazonSP;
 use App\Library\Walmart;
 
 class FileUpload extends Controller
@@ -38,8 +38,9 @@ class FileUpload extends Controller
 
         if($request->marketplace == 1)
         {
+            // $this->marketplace = new AmazonMWS();
+            $this->marketplace = AmazonSP::getInstance();
             $this->amazon_feed($request->file, $date, $id->id);
-            $marketplace = new AmazonMWS();
         } else if($request->marketplace == 2) {
             //$marketplace = new Walmart();
             $this->walmart_feed($request->file, $date, $id->id);
@@ -58,7 +59,8 @@ class FileUpload extends Controller
         
         if($filedata->mp_id == 1)
         {
-            $this->marketplace = new AmazonMWS();
+            // $this->marketplace = new AmazonMWS();
+            $this->marketplace = AmazonSP::getInstance();
             $response = $this->marketplace->get_feed_result($filedata->feedid);
             if(!empty($response) && preg_match_all('/\d+/', $response, $matches))
             {
@@ -127,6 +129,8 @@ class FileUpload extends Controller
         
         $file->pfile = $path;
         $file->total = $count;
+
+        // dd($this->marketplace);
         
         $response = $this->marketplace->send_feed(realpath('../storage/app/'.$path));
         if(isset($response['FeedSubmissionId']))

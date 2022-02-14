@@ -7,9 +7,16 @@ return [
             'marketplaceId'    => '',
             'keyId'            => '',
             'secretKey'        => '',
-            //'mwsAuthToken'     => '',
+            'mwsAuthToken'     => '',
             'amazonServiceUrl' => 'https://mws.amazonservices.com',
             'muteLog'          => false,
         ],
     ],
+    'spapi' => [
+        'lwaClientId' => '',
+        'lwaClientIdSecret' => '',
+        'awsAccessKey' => '',
+        'awsSecretKey' => '',
+        'seller_oauth_refresh_token' => '',
+    ]
 ];
